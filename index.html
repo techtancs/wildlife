@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HEAD: information ABOUT the page (not shown on the page itself) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title shown on the browser tab -->
+  <title>Capture Wilds - Wildlife Photography Gallery</title>
+
+  <!-- Short description of the webpage -->
+  <meta name="description" content="Capture Wilds: an all-in-one space for wildlife learning and exploring, with photographs and details of eight wild animals.">
+
+  <!-- INTERNAL CSS: HTML = structure, CSS = appearance -->
+  <style>
+    /* COLOURS used for the rainbow touches */
+    :root {
+      --red: #e8334f;
+      --orange: #f28c00;
+      --yellow: #d9a400;
+      --green: #1fa66a;
+      --blue: #2f7fe0;
+      --indigo: #5b5bd6;
+      --violet: #9b45e4;
+      --pink: #e0559f;
+      --rainbow: linear-gradient(90deg, #ff4d6d, #ff9f1c, #ffd23f, #2ec27e, #2f8cff, #5b5bd6, #a855f7);
+    }
+
+    /* GENERAL PAGE STYLING */
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f7fb;
+      color: #080808;
+      line-height: 1.6;
+    }
+
+    /* Main page container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #1f4e79;
+      color: white;
+      padding: 30px;
+      text-align: center;
+      border-bottom: 6px solid transparent;
+      border-image: var(--rainbow) 1;
+    }
+    header h1 {
+      margin-bottom: 5px;
+    }
+
+    /* NAVIGATION BAR */
+    nav {
+      background-color: #163a5c;
+      padding: 12px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* SECTION */
+    section {
+      background-color: white;
+      margin: 25px 0;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* TABLE */
+    .table-box {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #1f4e79;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* CARD (the coloured line on the left changes with --c) */
+    .card {
+      background-color: #eef5fb;
+      padding: 20px;
+      border-left: 5px solid var(--c, #1f4e79);
+      margin: 15px 0;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--c, #1f4e79);
+    }
+
+    /* GALLERY (photo grid) */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .photo {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background-color: #eef5fb;
+      border-radius: 10px;
+      overflow: hidden;
+      border-bottom: 6px solid var(--c);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .photo:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+    }
+    .photo img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+    .photo span {
+      display: block;
+      padding: 10px 14px;
+    }
+    .photo strong {
+      color: var(--c);
+      font-size: 1.1rem;
+    }
+    .photo small {
+      display: block;
+      color: #555;
+    }
+
+    /* ANIMAL DETAILS */
+    .profile-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .profile-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+    .latin {
+      font-style: italic;
+      color: #555;
+      margin-top: 0;
+    }
+    .details-table th {
+      width: 26%;
+      background-color: var(--c);
+    }
+    details {
+      margin-top: 15px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--c, #1f4e79);
+    }
+
+    /* COLOUR TAG */
+    .tag {
+      display: inline-block;
+      background-color: var(--c);
+      color: white;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin: 2px;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #163a5c;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 30px;
+      border-top: 6px solid transparent;
+      border-image: var(--rainbow) 1;
+    }
+    footer a {
+      color: #ffd23f;
+    }
+
+    /* PHONE LAYOUT */
+    @media (max-width: 760px) {
+      .profile-top {
+        grid-template-columns: 1fr;
+      }
+      .profile-img {
+        height: 230px;
+      }
+      nav a {
+        margin: 4px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<!-- BODY: everything the user sees on the webpage -->
+
+<!-- HEADER (semantic tag) -->
+<header>
+  <h1>Capture Wilds</h1>
+  <p>An all-in-one space for wildlife learning and exploring</p>
+  <small>
+    Photography &middot; Lifestyle &middot; Facts &middot; Survival
+  </small>
+</header>
+
+<!-- NAVIGATION BAR: href="#home" jumps to the element with id="home" -->
+<nav>
+  <a href="#home">||  Home  ||</a>
+  <a href="#text">||  Learn about lifestyle  ||</a>
+  <a href="#lists">||  Explore the wildlife  ||</a>
+  <a href="#media">||  Interaction  ||</a>
+  <a href="#animals">||  Animal details  ||</a>
+  <a href="#survival">||  Survival  ||</a>
+</nav>
+
+<!-- Main content of the webpage -->
+<main class="container">
+
+<!-- SECTION 1: INTRODUCTION -->
+<section id="home">
+  <h2>1. Wildlife</h2>
+
+  <p>
+    Wildlife means all <strong>plants, animals and other living things</strong>
+    that naturally grow or live in natural places
+    without being tamed by humans.
+  </p>
+
+  <p>
+    It includes <strong>animals, birds, reptiles, insects, plants and fungi.</strong>
+    Wildlife is found everywhere, from deep jungles to <em>city parks</em>.
+  </p>
+
+  <hr>
+
+  <h3>Why wildlife matters</h3>
+  <p>Wildlife is important because it gives us:</p>
+  <ol>
+    <li><code>Balance</code> &ndash; every species helps keep its ecosystem healthy</li>
+    <li><code>Resources</code> &ndash; food, medicine, clean water and fresh air</li>
+    <li><code>Value</code> &ndash; beauty, culture, science and learning</li>
+  </ol>
+
+  <h2>Wildlife photography</h2>
+
+  <p>
+    Wildlife photography is <strong>capturing the beauty of wildlife</strong>
+    in a still picture.
+  </p>
+
+  <p>
+    To <strong>freeze</strong> the sudden movement of wild animals,
+    you need to set up your camera to prevent blurry images <em>(shutter speed)</em>.
+  </p>
+
+  <hr>
+
+  <h3>Core camera settings for action</h3>
+  <p>To prevent blurry images, photographers rely on a specific setup:</p>
+  <ol>
+    <li><code>Fast shutter speed</code></li>
+    <li><code>Continuous Autofocus (AF-C)</code></li>
+    <li><code>Burst Mode</code></li>
+    <li><code>Wide Aperture</code></li>
+  </ol>
+</section>
+
+<!-- SECTION 2: LEARN ABOUT LIFESTYLE -->
+<section id="text">
+  <h2>2. Learn about lifestyle</h2>
+
+  <p>
+    Every wild animal has its own way of living. Where it sleeps, when it
+    hunts or feeds, and whether it lives alone or in a group is called its
+    <strong>lifestyle</strong>. Here is how the eight animals in this
+    gallery live.
+  </p>
+
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Animal</th>
+          <th>Social life</th>
+          <th>Most active</th>
+          <th>Feeding style</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Lion</td><td>Pride (family group)</td><td>Dusk to dawn; rests most of the day</td><td>Lionesses often hunt together</td></tr>
+        <tr><td>Tiger</td><td>Solitary</td><td>Dusk and night</td><td>Stalks and ambushes alone</td></tr>
+        <tr><td>Leopard</td><td>Solitary</td><td>Night</td><td>Stalks prey and carries it up trees</td></tr>
+        <tr><td>Crocodile</td><td>Mostly solitary</td><td>Basks by day, often hunts at night</td><td>Ambushes from the water</td></tr>
+        <tr><td>Hippo</td><td>Pod (group)</td><td>Rests in water by day, grazes at night</td><td>Grazes on grass</td></tr>
+        <tr><td>Wolf</td><td>Pack</td><td>Dusk and night</td><td>The pack chases prey over distance</td></tr>
+        <tr><td>Snake</td><td>Mostly solitary</td><td>Depends on the species</td><td>Ambush or active hunt; swallows prey whole</td></tr>
+        <tr><td>Bear</td><td>Mostly solitary</td><td>Varies by species and season</td><td>Forages for plants, fish, insects and meat</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Three ways of living</h3>
+    <ul>
+      <li><strong>Group life</strong> &ndash; lions, wolves and hippos live and work together.</li>
+      <li><strong>Solitary life</strong> &ndash; tigers, leopards, crocodiles, snakes and most bears live alone.</li>
+      <li><strong>Seasonal life</strong> &ndash; many bears rest through winter, living off stored body fat.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 3: LINKS -->
+<section id="Links">
+  <h2>3. Links and URLs</h2>
+
+  <p>The important <code>Links</code> to wildlife</p>
+
+  <!-- target="_blank" opens the link in a new tab -->
+  <p>
+    Visit
+    <a href="https://www.naturepl.com/blog/" target="_blank">Naturepl</a>
+  </p>
+
+  <p>
+    Visit
+    <a href="https://www.nationalgeographic.org/explore/programs/photo-ark" target="_top">nationalgeographic</a>
+  </p>
+
+  <p>
+    Visit
+    <a href="https://en.wikipedia.org/wiki/Wildlife" target="_blank">Wikipedia</a>
+  </p>
+
+  <!-- Email link -->
+  <p>
+    Send email:
+    <a href="mailto:demomail112@example.com">Email Us</a>
+  </p>
+
+  <!-- Telephone link -->
+  <p>
+    Call:
+    <a href="tel:+911234567890">+91 1234567890</a>
+  </p>
+</section>
+
+<!-- SECTION 4: EXPLORE THE WILDLIFE -->
+<section id="lists">
+  <h2>4. Explore the wildlife</h2>
+  <p>
+    Wildlife refers to undomesticated animals and uncultivated plant species which can exist in
+    their natural habitat, but has come to include all organisms that grow or live wild in an
+    area without being introduced by humans. Wildlife was also synonymous to game, birds and
+    mammals hunted for sport. Wildlife can be found in all ecosystems, both wild and most
+    developed urban areas, forming distinct groups.
+  </p>
+
+  <!-- ORDERED LIST -->
+  <h3>Wildlife encompassment</h3>
+  <ol>
+    <li>Biological Taxonomy</li>
+    <li>Ecosystem &amp; Habitat Classifications</li>
+    <li>Functional Ecological Classifications</li>
+  </ol>
+
+  <!-- UNORDERED LIST -->
+  <h3>Our eight animals by biological group</h3>
+  <ul>
+    <li><strong>Mammals:</strong> Lion, Tiger, Leopard, Hippo, Wolf, Bear</li>
+    <li><strong>Reptiles:</strong> Crocodile, Snake</li>
+  </ul>
+
+  <!-- DESCRIPTION LIST -->
+  <h3>Wild words</h3>
+  <dl>
+    <dt>Habitat</dt>
+    <dd>The natural home of an animal or plant.</dd>
+    <dt>Predator and prey</dt>
+    <dd>A predator hunts other animals; the hunted animal is its prey.</dd>
+    <dt>Herbivore, carnivore, omnivore</dt>
+    <dd>Eats only plants, mainly meat, or both plants and meat.</dd>
+    <dt>Camouflage</dt>
+    <dd>Colours or patterns that help an animal blend into its surroundings.</dd>
+    <dt>Ecosystem</dt>
+    <dd>A community of living things and their environment, all connected together.</dd>
+  </dl>
+</section>
+
+<!-- SECTION 5: IMAGES (click a photo to open that animal's details) -->
+<section id="media">
+  <h2>5. Images &ndash; the Rainbow Gallery</h2>
+
+  <!--
+    src = location of image
+    alt = alternative text (always provide meaningful alt text)
+  -->
+  <p>
+    Eight wild portraits, eight colours of the rainbow.
+    Click a photo to read all about that animal.
+  </p>
+
+  <div class="gallery">
+
+    <a class="photo" href="#lion" style="--c: var(--red);">
+      <img src="lion.jpg" alt="Photograph of a lion" loading="lazy">
+      <span><strong>Lion</strong><small>Red &middot; Courage</small></span>
+    </a>
+
+    <a class="photo" href="#tiger" style="--c: var(--orange);">
+      <img src="tiger.jpg" alt="Photograph of a tiger" loading="lazy">
+      <span><strong>Tiger</strong><small>Orange &middot; Fire</small></span>
+    </a>
+
+    <a class="photo" href="#leopard" style="--c: var(--yellow);">
+      <img src="leopard.jpg" alt="Photograph of a leopard" loading="lazy">
+      <span><strong>Leopard</strong><small>Yellow &middot; Sunlight</small></span>
+    </a>
+
+    <a class="photo" href="#crocodile" style="--c: var(--green);">
+      <img src="crocodile.jpg" alt="Photograph of a crocodile" loading="lazy">
+      <span><strong>Crocodile</strong><small>Green &middot; Swamp</small></span>
+    </a>
+
+    <a class="photo" href="#hippo" style="--c: var(--blue);">
+      <img src="hippo.jpg" alt="Photograph of a hippo" loading="lazy">
+      <span><strong>Hippo</strong><small>Blue &middot; Water</small></span>
+    </a>
+
+    <a class="photo" href="#wolf" style="--c: var(--indigo);">
+      <img src="wolf.jpg" alt="Photograph of a wolf" loading="lazy">
+      <span><strong>Wolf</strong><small>Indigo &middot; Twilight</small></span>
+    </a>
+
+    <a class="photo" href="#snake" style="--c: var(--violet);">
+      <img src="snake.jpg" alt="Photograph of a snake" loading="lazy">
+      <span><strong>Snake</strong><small>Violet &middot; Mystery</small></span>
+    </a>
+
+    <a class="photo" href="#bear" style="--c: var(--pink);">
+      <img src="bear.jpg" alt="Photograph of a bear" loading="lazy">
+      <span><strong>Bear</strong><small>Pink &middot; Warmth</small></span>
+    </a>
+
+  </div>
+
+  <p>
+    The <code>alt</code> attribute improves accessibility and is
+    displayed if the image cannot be loaded.
+  </p>
+</section>
+
+<!-- SECTION 6: ANIMAL DETAILS -->
+<!-- NOTE: details are general for each animal group. If your photo shows a
+     specific species, edit the table values to match it. -->
+<section id="animals">
+  <h2>6. Animal details</h2>
+  <p>Full details of every animal in the gallery.</p>
+
+  <!-- ================= LION ================= -->
+  <article class="card" id="lion" style="--c: var(--red);">
+    <div class="profile-top">
+      <img class="profile-img" src="lion.jpg" alt="Photograph of a lion">
+      <div>
+        <h3>The Lion</h3>
+        <p class="latin">Panthera leo</p>
+        <span class="tag" style="--c: var(--red);">Red &middot; Courage</span>
+        <p>
+          Lions are the most social of all the big cats. They live in family
+          groups called <strong>prides</strong>. The lionesses do most of the
+          hunting, often working together, while the males defend the territory.
+          The male's thick mane makes him easy to recognise.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>African savannas and grasslands; a small wild population lives in India's Gir Forest</td></tr>
+        <tr><th>Size</th><td>Males about 150&ndash;250 kg, females about 120&ndash;180 kg</td></tr>
+        <tr><th>Diet</th><td>Carnivore: zebra, wildebeest, buffalo, antelope</td></tr>
+        <tr><th>Lifespan</th><td>About 10&ndash;14 years in the wild</td></tr>
+        <tr><th>Conservation</th><td>Vulnerable</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>A lion's roar can be heard from about 8 km away.</li>
+        <li>Lions can sleep for up to 20 hours a day.</li>
+        <li>Cubs are born with spots that fade as they grow.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= TIGER ================= -->
+  <article class="card" id="tiger" style="--c: var(--orange);">
+    <div class="profile-top">
+      <img class="profile-img" src="tiger.jpg" alt="Photograph of a tiger">
+      <div>
+        <h3>The Tiger</h3>
+        <p class="latin">Panthera tigris</p>
+        <span class="tag" style="--c: var(--orange);">Orange &middot; Fire</span>
+        <p>
+          The tiger is the largest of all the wild cats. Unlike many cats,
+          tigers love water and are strong swimmers. They live alone and patrol
+          large areas of forest, hunting mostly at dusk and during the night.
+          Their stripes help them blend into tall grass and shadows.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Forests, grasslands and mangroves of Asia</td></tr>
+        <tr><th>Size</th><td>About 100&ndash;300 kg depending on sex and subspecies; up to about 3 m long including the tail</td></tr>
+        <tr><th>Diet</th><td>Carnivore: deer, wild boar, wild cattle</td></tr>
+        <tr><th>Lifespan</th><td>About 10&ndash;15 years in the wild</td></tr>
+        <tr><th>Conservation</th><td>Endangered</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>No two tigers have the same stripe pattern.</li>
+        <li>The stripes go all the way into the skin, not just the fur.</li>
+        <li>Tigers are excellent swimmers and often cool off in water.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= LEOPARD ================= -->
+  <article class="card" id="leopard" style="--c: var(--yellow);">
+    <div class="profile-top">
+      <img class="profile-img" src="leopard.jpg" alt="Photograph of a leopard">
+      <div>
+        <h3>The Leopard</h3>
+        <p class="latin">Panthera pardus</p>
+        <span class="tag" style="--c: var(--yellow);">Yellow &middot; Sunlight</span>
+        <p>
+          Leopards are secretive, powerful and extremely adaptable. They live in
+          everything from rainforests to mountains and even near villages. Their
+          golden coat is covered in spots called <strong>rosettes</strong>.
+          Leopards are strong climbers and often rest on tree branches by day.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Forests, savannas and mountains across Africa and Asia</td></tr>
+        <tr><th>Size</th><td>About 30&ndash;90 kg</td></tr>
+        <tr><th>Diet</th><td>Carnivore: antelope, monkeys, rodents, birds</td></tr>
+        <tr><th>Lifespan</th><td>About 12&ndash;17 years in the wild</td></tr>
+        <tr><th>Conservation</th><td>Vulnerable</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>Leopards can carry heavy prey up into a tree to keep it safe.</li>
+        <li>Each leopard has its own unique pattern of rosettes.</li>
+        <li>Some leopards are born almost black and are known as black panthers.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= CROCODILE ================= -->
+  <article class="card" id="crocodile" style="--c: var(--green);">
+    <div class="profile-top">
+      <img class="profile-img" src="crocodile.jpg" alt="Photograph of a crocodile">
+      <div>
+        <h3>The Crocodile</h3>
+        <p class="latin">Family Crocodylidae</p>
+        <span class="tag" style="--c: var(--green);">Green &middot; Swamp</span>
+        <p>
+          Crocodiles are patient ambush hunters. They float almost invisibly
+          with only their eyes and nostrils above water, then strike in a flash.
+          Their relatives have survived on Earth for over 200 million years.
+          Mother crocodiles guard their nests and carry newly hatched babies to
+          the water in their mouths.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Rivers, lakes, swamps and coasts in warm regions</td></tr>
+        <tr><th>Size</th><td>Most species are 2&ndash;5 m long; the largest can pass 6 m</td></tr>
+        <tr><th>Diet</th><td>Carnivore: fish, birds, and mammals that come to drink</td></tr>
+        <tr><th>Lifespan</th><td>Often 50&ndash;70 years</td></tr>
+        <tr><th>Conservation</th><td>Varies by species</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>Crocodiles have one of the strongest bites in the animal world.</li>
+        <li>The temperature of the nest can decide whether babies are male or female.</li>
+        <li>They bask in the sun with their mouths open to cool down.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= HIPPO ================= -->
+  <article class="card" id="hippo" style="--c: var(--blue);">
+    <div class="profile-top">
+      <img class="profile-img" src="hippo.jpg" alt="Photograph of a hippo">
+      <div>
+        <h3>The Hippo</h3>
+        <p class="latin">Hippopotamus amphibius</p>
+        <span class="tag" style="--c: var(--blue);">Blue &middot; Water</span>
+        <p>
+          Hippos spend the day cooling off in rivers and lakes, then come out at
+          night to graze on grass. The name means "river horse", though they are
+          not related to horses. They look calm but are among the most dangerous
+          animals in Africa, especially when defending their territory.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Rivers, lakes and swamps of sub-Saharan Africa</td></tr>
+        <tr><th>Size</th><td>About 1,300&ndash;1,800 kg, around 1.5 m tall at the shoulder</td></tr>
+        <tr><th>Diet</th><td>Herbivore: mainly grass, eaten at night</td></tr>
+        <tr><th>Lifespan</th><td>About 40&ndash;50 years</td></tr>
+        <tr><th>Conservation</th><td>Vulnerable</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>Hippos make a reddish oily fluid that helps protect their skin from the sun.</li>
+        <li>They can hold their breath for about five minutes underwater.</li>
+        <li>Their closest living relatives are whales and dolphins.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= WOLF ================= -->
+  <article class="card" id="wolf" style="--c: var(--indigo);">
+    <div class="profile-top">
+      <img class="profile-img" src="wolf.jpg" alt="Photograph of a wolf">
+      <div>
+        <h3>The Wolf</h3>
+        <p class="latin">Canis lupus</p>
+        <span class="tag" style="--c: var(--indigo);">Indigo &middot; Twilight</span>
+        <p>
+          Wolves live and hunt in family packs led by a breeding pair. They
+          communicate with howls, body language and scent, and the whole pack
+          helps raise the pups. Wolves are intelligent, travel long distances
+          and are the wild ancestors of today's pet dogs.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Forests, mountains, tundra and grasslands of the Northern Hemisphere</td></tr>
+        <tr><th>Size</th><td>Most are about 30&ndash;50 kg; the largest can reach about 80 kg</td></tr>
+        <tr><th>Diet</th><td>Mostly carnivore: deer, elk, moose and smaller animals</td></tr>
+        <tr><th>Lifespan</th><td>About 6&ndash;8 years in the wild</td></tr>
+        <tr><th>Conservation</th><td>Least Concern overall, though some populations are threatened</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>A wolf's howl can travel many kilometres across open land.</li>
+        <li>Wolf pups are born blind and deaf and depend on the pack.</li>
+        <li>Wolves can travel dozens of kilometres in a single day.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= SNAKE ================= -->
+  <article class="card" id="snake" style="--c: var(--violet);">
+    <div class="profile-top">
+      <img class="profile-img" src="snake.jpg" alt="Photograph of a snake">
+      <div>
+        <h3>The Snake</h3>
+        <p class="latin">Suborder Serpentes</p>
+        <span class="tag" style="--c: var(--violet);">Violet &middot; Mystery</span>
+        <p>
+          Snakes have no legs, no eyelids and no outer ears, yet they sense the
+          world brilliantly through scent, heat and vibrations. There are
+          thousands of species, and only a minority are dangerous to people.
+          Snakes help nature by controlling pests such as rats and mice.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Almost everywhere except Antarctica: forests, deserts, grasslands, rivers and oceans</td></tr>
+        <tr><th>Size</th><td>From about 10 cm to over 6 m, depending on the species</td></tr>
+        <tr><th>Diet</th><td>Carnivore: rodents, birds, eggs, frogs, fish; swallowed whole</td></tr>
+        <tr><th>Lifespan</th><td>Roughly 10&ndash;30 years, depending on the species</td></tr>
+        <tr><th>Conservation</th><td>Varies by species</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>A snake flicks its tongue to collect scent from the air.</li>
+        <li>Snakes shed their skin as they grow.</li>
+        <li>Their jaws can stretch wide to swallow prey larger than their head.</li>
+      </ul>
+    </details>
+  </article>
+
+  <!-- ================= BEAR ================= -->
+  <article class="card" id="bear" style="--c: var(--pink);">
+    <div class="profile-top">
+      <img class="profile-img" src="bear.jpg" alt="Photograph of a bear">
+      <div>
+        <h3>The Bear</h3>
+        <p class="latin">Family Ursidae</p>
+        <span class="tag" style="--c: var(--pink);">Pink &middot; Warmth</span>
+        <p>
+          Bears are strong, curious and surprisingly gentle when left alone.
+          There are eight species, from small sun bears to giant brown and polar
+          bears. They eat almost anything: berries, roots, insects, fish and
+          meat. In cold regions many bears spend the winter in a deep rest,
+          living off the fat they stored in autumn.
+        </p>
+      </div>
+    </div>
+    <div class="table-box">
+      <table class="details-table">
+        <tr><th>Habitat</th><td>Forests, mountains and Arctic regions in Asia, Europe and the Americas</td></tr>
+        <tr><th>Size</th><td>From about 30 kg (sun bear) to over 500 kg (largest brown and polar bears)</td></tr>
+        <tr><th>Diet</th><td>Mostly omnivore: plants, fruit, insects, fish and meat</td></tr>
+        <tr><th>Lifespan</th><td>About 20&ndash;30 years</td></tr>
+        <tr><th>Conservation</th><td>Varies by species</td></tr>
+      </table>
+    </div>
+    <details>
+      <summary>Fun facts</summary>
+      <ul>
+        <li>A bear's sense of smell is far better than a dog's.</li>
+        <li>Despite their size, bears can run very fast over short distances.</li>
+        <li>Bears are good swimmers and climbers.</li>
+      </ul>
+    </details>
+  </article>
+</section>
+
+<!-- SECTION 7: TABLE -->
+<section id="table">
+  <h2>7. Animals at a glance</h2>
+
+  <!-- <table> table | <tr> row | <th> heading cell | <td> data cell -->
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Animal</th>
+          <th>Colour</th>
+          <th>Group</th>
+          <th>Diet</th>
+          <th>Conservation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Lion</td><td><span class="tag" style="--c: var(--red);">Red</span></td><td>Mammal</td><td>Carnivore</td><td>Vulnerable</td></tr>
+        <tr><td>2</td><td>Tiger</td><td><span class="tag" style="--c: var(--orange);">Orange</span></td><td>Mammal</td><td>Carnivore</td><td>Endangered</td></tr>
+        <tr><td>3</td><td>Leopard</td><td><span class="tag" style="--c: var(--yellow);">Yellow</span></td><td>Mammal</td><td>Carnivore</td><td>Vulnerable</td></tr>
+        <tr><td>4</td><td>Crocodile</td><td><span class="tag" style="--c: var(--green);">Green</span></td><td>Reptile</td><td>Carnivore</td><td>Varies by species</td></tr>
+        <tr><td>5</td><td>Hippo</td><td><span class="tag" style="--c: var(--blue);">Blue</span></td><td>Mammal</td><td>Herbivore</td><td>Vulnerable</td></tr>
+        <tr><td>6</td><td>Wolf</td><td><span class="tag" style="--c: var(--indigo);">Indigo</span></td><td>Mammal</td><td>Carnivore</td><td>Least Concern</td></tr>
+        <tr><td>7</td><td>Snake</td><td><span class="tag" style="--c: var(--violet);">Violet</span></td><td>Reptile</td><td>Carnivore</td><td>Varies by species</td></tr>
+        <tr><td>8</td><td>Bear</td><td><span class="tag" style="--c: var(--pink);">Pink</span></td><td>Mammal</td><td>Omnivore</td><td>Varies by species</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 8: SURVIVAL -->
+<section id="survival">
+  <h2>8. Survival</h2>
+
+  <p>
+    Survival has two sides: how wild animals survive in nature, and how
+    people can help wildlife survive.
+  </p>
+
+  <h3>How animals survive</h3>
+
+  <div class="card" style="--c: var(--orange);">
+    <h3>Camouflage</h3>
+    <p>Tiger stripes and leopard rosettes break up the animal's outline so it blends into grass, leaves and shadows.</p>
+  </div>
+
+  <div class="card" style="--c: var(--red);">
+    <h3>Teamwork</h3>
+    <p>Lions and wolves hunt and raise their young together, which makes the whole group stronger.</p>
+  </div>
+
+  <div class="card" style="--c: var(--blue);">
+    <h3>Water and patience</h3>
+    <p>Crocodiles ambush from the water, while hippos stay cool in rivers during the heat of the day.</p>
+  </div>
+
+  <div class="card" style="--c: var(--violet);">
+    <h3>Special senses</h3>
+    <p>Snakes "taste" the air with their tongues, and bears use a powerful sense of smell to find food.</p>
+  </div>
+
+  <div class="card" style="--c: var(--pink);">
+    <h3>Winter rest</h3>
+    <p>In cold regions many bears rest through winter and live off the fat they stored in autumn.</p>
+  </div>
+
+  <hr>
+
+  <h3>Threats and protection</h3>
+
+  <div class="card" style="--c: var(--red);">
+    <h3>Main threats</h3>
+    <ul>
+      <li><strong>Habitat loss</strong> &ndash; forests, wetlands and grasslands are cleared for farms and cities.</li>
+      <li><strong>Poaching</strong> &ndash; illegal hunting and the wildlife trade threaten many species.</li>
+      <li><strong>Climate change</strong> &ndash; changing weather shifts the food, water and seasons animals depend on.</li>
+      <li><strong>Pollution</strong> &ndash; plastic and chemicals harm rivers and the animals that live in them.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="--c: var(--green);">
+    <h3>How we can help</h3>
+    <ul>
+      <li>Plant trees and protect local green spaces.</li>
+      <li>Reduce plastic and keep rivers and parks clean.</li>
+      <li>Never buy products made from endangered animals.</li>
+      <li>Keep a safe distance from wild animals and never feed them.</li>
+      <li>Share what you learn so more people care about wildlife.</li>
+    </ul>
+  </div>
+
+  <aside class="card">
+    <strong>Tip:</strong>
+    Good wildlife photography is about patience and respect. Never chase or
+    startle an animal for a photo; the animal's safety always comes first.
+  </aside>
+</section>
+
+</main>
+
+<!-- FOOTER: copyright, contact info, links, etc. -->
+<footer>
+  <p>&copy; 2026 Capture Wilds</p>
+  <p>Wildlife Photography Gallery</p>
+  <p>Photographs and design by Your Name</p>
+  <p><a href="#home">Back to top</a></p>
+</footer>
+
+</body>
+</html>
